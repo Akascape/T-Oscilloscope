@@ -1,4 +1,4 @@
-# This is a modifie version of VolumeControl widget,
+# This is a modified version of VolumeControl widget,
 # Original source code: https://github.com/dildeolupbiten/VolumeControl
 
 import tkinter as tk
