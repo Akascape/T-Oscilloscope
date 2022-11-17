@@ -9,7 +9,7 @@ It has a modern UI made with customtkinter.
 
 ### Requirements
 - Tkinter
-- [Customtkinter](https://github.com/TomSchimansky/CustomTkinter)
+- [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter)
 - Turtle
 
 # GUI
