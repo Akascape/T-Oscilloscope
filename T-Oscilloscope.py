@@ -8,9 +8,9 @@ import customtkinter
 import math
 import threading
 import sys
-from widgets.volume_control import VolumeControl
 from widgets.spinbox import CTkSpinbox
 from widgets.tooltip import ToolTip
+from tkdial import Dial
 
 try:
     import ctypes
@@ -94,10 +94,15 @@ def color():
             color_bt.configure(fg_color="white", state="normal")
         else:
             color_bt.configure(fg_color=cbt[i].fg_color, state="normal")
+        if cbt[i].fg_color=="chartreuse":
+            cbt[i].fg_color="green"
+        elif cbt[i].fg_color=="magenta":
+            cbt[i].fg_color="pink"
+        knob2.configure(color_gradient=("black", cbt[i].fg_color))
         win2.destroy()
         
     color_bt.configure(state="disabled")
-    colors = ["red","chartreuse","blue", "aqua", "yellow", "magenta"]
+    colors = ["red", "chartreuse", "blue", "cyan", "yellow", "magenta"]
     win2 = customtkinter.CTkToplevel()
     win2.maxsize(180,75)
     win2.minsize(180,75)
@@ -205,48 +210,37 @@ var = tkinter.StringVar()
 Label_1 = customtkinter.CTkLabel(master=frame_1, text="Latency")
 Label_1.grid(row=1, padx=5, pady=10, sticky="w")
 
-canvas = tkinter.Canvas(master=frame_1, bg=customtkinter.ThemeManager.theme["color"]["frame_low"][o],
-                        relief="flat", highlightthickness=0, width=150, height=150)
-canvas.place(x=20, y=100)
-
-knob1 = VolumeControl(
-    master=canvas,
-    x=30,
-    y=30,
+knob1 = Dial(
+    master=frame_1,
+    bg=customtkinter.ThemeManager.theme["color"]["frame_low"][o],
     start=1,
     end=100,
-    radius=50,
-    distance=40,
-    length=9,
-    width=4,
-    needle_color="grey",
-    unit_color= "grey",
+    radius=40,
+    unit_length=9,
+    unit_width=4,
     text_color=customtkinter.ThemeManager.theme["color"]["text"][o],
-    color_gradient={"from": "green", "to": "cyan"})
+    color_gradient=("green", "cyan"))
+
+knob1.place(x=25, y=110)
 
 Label_2 = customtkinter.CTkLabel(master=frame_1, text="Voltage")
 Label_2.grid(row=1, padx=140, pady=5, sticky="w")
 
-canvas2 = tkinter.Canvas(master=frame_1, bg=customtkinter.ThemeManager.theme["color"]["frame_low"][o],
-                        relief="flat", highlightthickness=0, width=150, height=150)
-canvas2.place(x=152, y=100)
-
-knob2 = VolumeControl(
-    master=canvas2,
-    x=30,
-    y=30,
-    start=255,
-    end=0,
-    radius=50,
-    distance=40,
-    length=9,
-    width=4,
-    text_title="V: ",
-    needle_color="grey",
-    unit_color= "grey",
+knob2 = Dial(
+    master=frame_1,
+    bg=customtkinter.ThemeManager.theme["color"]["frame_low"][o],
+    start=0,
+    end=255,
+    radius=40,
+    unit_length=9,
+    unit_width=4,
+    text="V: ",
     integer=True,
     text_color=customtkinter.ThemeManager.theme["color"]["text"][o],
-    color_gradient={"from": "pink", "to": "blue"})
+    color_gradient=("black","cyan"))
+
+knob2.set(255)
+knob2.place(x=160, y=110)
 
 Label_3 = customtkinter.CTkLabel(master=frame_1, text="Phase Shift: 0.0", anchor="w")
 Label_3.place(x=25, y=250)
