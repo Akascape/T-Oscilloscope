@@ -88,17 +88,17 @@ def frequency_mode():
         
 cbt={}   
 def color():
-    
     def changecolor(i=7):
         if i==7:
             color_bt.configure(fg_color="white", state="normal")
+            knob2.configure(color_gradient=("black", "white"))
         else:
             color_bt.configure(fg_color=cbt[i].fg_color, state="normal")
-        if cbt[i].fg_color=="chartreuse":
-            cbt[i].fg_color="green"
-        elif cbt[i].fg_color=="magenta":
-            cbt[i].fg_color="pink"
-        knob2.configure(color_gradient=("black", cbt[i].fg_color))
+            if cbt[i].fg_color=="chartreuse":
+                cbt[i].fg_color="green"
+            elif cbt[i].fg_color=="magenta":
+                cbt[i].fg_color="pink"
+            knob2.configure(color_gradient=("black", cbt[i].fg_color))
         win2.destroy()
         
     color_bt.configure(state="disabled")
