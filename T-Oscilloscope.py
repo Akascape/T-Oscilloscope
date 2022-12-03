@@ -142,7 +142,7 @@ def draw(time):
             screen_value.pencolor(0,int(knob2.value),0)
         elif color_bt.fg_color=="blue":
             screen_value.pencolor(0,0,int(knob2.value))
-        elif color_bt.fg_color=="aqua":
+        elif color_bt.fg_color=="cyan":
             screen_value.pencolor(0,int(knob2.value),int(knob2.value))
         elif color_bt.fg_color=="magenta":
             screen_value.pencolor(int(knob2.value),0,int(knob2.value))
