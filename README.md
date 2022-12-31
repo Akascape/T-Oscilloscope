@@ -9,7 +9,7 @@ It has a modern UI made with customtkinter.
 
 ### Requirements
 - Tkinter
-- [CustomTkinter==4.6.3](https://pypi.org/project/customtkinter/4.6.3/)
+- [CustomTkinter](https://pypi.org/project/customtkinter/)
 - [TkDial](https://pypi.org/project/tkdial/)
 - Turtle
 
