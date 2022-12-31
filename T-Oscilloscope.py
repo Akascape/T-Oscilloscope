@@ -34,20 +34,20 @@ Omega2 = 1
 onLoop = True
 
 def description():
+
     tools = {Label_1: "This is the window refreshed rate, this can lead to quality "+
              "render but slower drawing time, or a short drawing time but sharp renders",
              Label_2: "It effectively makes the electron travel faster, making the image brighter",
              Label_3: "Move the plates in relation to each other in an angle from 0 to 180 degrees",
              Label_4: "Choose between some plate frequency relations optimized for Lissajous curves",
              custom: "Manually enter the frequency relation",
-             color_bt: "Change the electron beam color",
+             color_bt._canvas: "Change the electron beam color",
              reset_bt: "Clear the canvas",
              checkbox: "Lock-Mode"}
-    
     for i in tools:
-        ToolTip(i, msg=tools[i], delay=1, follow=True, bg=customtkinter.ThemeManager.theme["color"]["frame_high"][o],
-                fg=customtkinter.ThemeManager.theme["color"]["text"][o])
-        
+        ToolTip(i, msg=tools[i], delay=0.7, follow=True, bg=customtkinter.ThemeManager.theme["CTkFrame"]["top_fg_color"][o],
+                fg=customtkinter.ThemeManager.theme["CTkLabel"]["text_color"][o])
+
 def changeOmega():
     global Omega1,Omega2
     if custom.get()==1:
@@ -93,12 +93,12 @@ def color():
             color_bt.configure(fg_color="white", state="normal")
             knob2.configure(color_gradient=("black", "white"))
         else:
-            color_bt.configure(fg_color=cbt[i].fg_color, state="normal")
-            if cbt[i].fg_color=="chartreuse":
-                cbt[i].fg_color="green"
-            elif cbt[i].fg_color=="magenta":
-                cbt[i].fg_color="pink"
-            knob2.configure(color_gradient=("black", cbt[i].fg_color))
+            color_bt.configure(fg_color=cbt[i].cget("fg_color"), state="normal")
+            if cbt[i].cget("fg_color")=="chartreuse":
+                cbt[i].configure(fg_color="green")
+            elif cbt[i].cget("fg_color")=="magenta":
+                cbt[i].configure(fg_color="pink")
+            knob2.configure(color_gradient=("black", cbt[i].cget("fg_color")))
         win2.destroy()
         
     color_bt.configure(state="disabled")
@@ -136,21 +136,20 @@ def draw(time):
         y_value.goto(300,+y_axis*100)
         screen_value.goto(x_axis*215,y_axis*150)
         
-        if color_bt.fg_color=="red":
+        if color_bt.cget("fg_color")=="red":
             screen_value.pencolor(int(knob2.value),0,0)
-        elif color_bt.fg_color=="chartreuse":
+        elif color_bt.cget("fg_color")=="chartreuse":
             screen_value.pencolor(0,int(knob2.value),0)
-        elif color_bt.fg_color=="blue":
+        elif color_bt.cget("fg_color")=="blue":
             screen_value.pencolor(0,0,int(knob2.value))
-        elif color_bt.fg_color=="cyan":
+        elif color_bt.cget("fg_color")=="cyan":
             screen_value.pencolor(0,int(knob2.value),int(knob2.value))
-        elif color_bt.fg_color=="magenta":
+        elif color_bt.cget("fg_color")=="magenta":
             screen_value.pencolor(int(knob2.value),0,int(knob2.value))
-        elif color_bt.fg_color=="yellow":
+        elif color_bt.cget("fg_color")=="yellow":
             screen_value.pencolor(int(knob2.value),int(knob2.value),0)
-        elif color_bt.fg_color=="white":
+        elif color_bt.cget("fg_color")=="white":
             screen_value.pencolor(int(knob2.value),int(knob2.value),int(knob2.value))
-        
         screen_value.pendown()
         y_value.pendown()
         x_value.pendown()
@@ -197,38 +196,38 @@ frame_1.grid(padx=20, pady=20, sticky="nswe")
 
 customtkinter.FontManager.load_font("widgets//Orbitron-Bold.ttf") #Google Fonts: https://fonts.google.com/specimen/Orbitron
 
-Label = customtkinter.CTkLabel(master=frame_1, text="T-Oscilloscope", text_font="orbitron 25")
+Label = customtkinter.CTkLabel(master=frame_1, text="T-Oscilloscope", font=("orbitron", 33))
 Label.grid(row=0, padx=10, pady=10, sticky="w")
 
 bar = customtkinter.CTkProgressBar(master=frame_1, width=280, height=5, corner_radius=10,
-                                   progress_color=customtkinter.ThemeManager.theme["color"]["slider"][o])
+                                   progress_color=customtkinter.ThemeManager.theme["CTkSlider"]["fg_color"][o])
 bar.place(x=10, y=55)
 bar.set(0)
         
 var = tkinter.StringVar()
 
 Label_1 = customtkinter.CTkLabel(master=frame_1, text="Latency")
-Label_1.grid(row=1, padx=5, pady=10, sticky="w")
+Label_1.grid(row=1, padx=(55,0), pady=(20,0), sticky="w")
 
 knob1 = Dial(
     master=frame_1,
-    bg=customtkinter.ThemeManager.theme["color"]["frame_low"][o],
+    bg=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][o],
     start=1,
     end=100,
     radius=40,
     unit_length=9,
     unit_width=4,
-    text_color=customtkinter.ThemeManager.theme["color"]["text"][o],
+    text_color=customtkinter.ThemeManager.theme["CTkLabel"]["text_color"][o],
     color_gradient=("green", "cyan"))
 
 knob1.place(x=25, y=110)
 
 Label_2 = customtkinter.CTkLabel(master=frame_1, text="Voltage")
-Label_2.grid(row=1, padx=140, pady=5, sticky="w")
+Label_2.grid(row=1, padx=(190,0), pady=(20,0), sticky="w")
 
 knob2 = Dial(
     master=frame_1,
-    bg=customtkinter.ThemeManager.theme["color"]["frame_low"][o],
+    bg=customtkinter.ThemeManager.theme["CTkFrame"]["fg_color"][o],
     start=0,
     end=255,
     radius=40,
@@ -236,7 +235,7 @@ knob2 = Dial(
     unit_width=4,
     text="V: ",
     integer=True,
-    text_color=customtkinter.ThemeManager.theme["color"]["text"][o],
+    text_color=customtkinter.ThemeManager.theme["CTkLabel"]["text_color"][o],
     color_gradient=("black","cyan"))
 
 knob2.set(255)
@@ -265,13 +264,13 @@ radiobutton_1.select()
 slider_h = customtkinter.CTkSlider(master=frame_1, from_=-100, to=100, number_of_steps=200, width=460, progress_color=None)
 slider_h.place(x=295, y=350)
 
-slider_v = customtkinter.CTkSlider(master=frame_1, from_=-100, to=100, number_of_steps=200, height=320, orient="vertical", progress_color=None)
+slider_v = customtkinter.CTkSlider(master=frame_1, from_=-100, to=100, number_of_steps=200, height=320, orientation="vertical", progress_color=None)
 slider_v.place(x=765, y=5)
 
 checkbox = customtkinter.CTkCheckBox(master=frame_1, text="", command=lockmode)
 checkbox.place(x=760, y=340)
 
-color_bt = customtkinter.CTkButton(master=frame_1, width=30, hover=False, fg_color="aqua", text="", command=color)
+color_bt = customtkinter.CTkButton(master=frame_1, width=30, hover=False, fg_color="cyan", text="", command=color)
 color_bt.place(x=125, y=215)
 
 custom = customtkinter.CTkSwitch(master=frame_1, width=30, text="custom", command=frequency_mode)
@@ -300,8 +299,8 @@ x_value.shape("circle")
 y_value.shape("circle")
 screen_value.shape("circle")
 
-x_value.color(customtkinter.ThemeManager.theme["color"]["button"][o])
-y_value.color(customtkinter.ThemeManager.theme["color"]["button"][o])
+x_value.color(customtkinter.ThemeManager.theme["CTkButton"]["fg_color"][o])
+y_value.color(customtkinter.ThemeManager.theme["CTkButton"]["fg_color"][o])
 
 x_value.penup()
 y_value.penup()
@@ -312,7 +311,7 @@ screen_value.pensize(5)
 
 reset_bt = customtkinter.CTkButton(master=frame_1, width=1, height=1,fg_color="black", bg_color="black",
                                    hover=False, command=reset, text="⟳", text_color="white")
-reset_bt.place(x=720, y=10)
+reset_bt.place(x=730, y=10)
 
 description()
 
